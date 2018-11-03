@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
+import { StyleSheet, Text, View, Animated, StatusBar } from 'react-native';
 
 const types = {
   default: '#313131',
@@ -32,7 +32,7 @@ class SnackBar extends Component<Props, State> {
     (this.props.position ? this.props.position : this.state.position) ===
     'bottom'
       ? 50
-      : -84;
+      : -50;
   animatedValue = new Animated.Value(this.value);
 
   async show(
@@ -52,7 +52,7 @@ class SnackBar extends Component<Props, State> {
         position: position
       });
       Animated.timing(this.animatedValue, {
-        toValue: 0,
+        toValue: position === 'bottom' ? 0 : StatusBar.currentHeight + 10.0,
         duration: 400,
         useNativeDriver: true
       }).start(this.hide(duration));
@@ -96,7 +96,7 @@ class SnackBar extends Component<Props, State> {
 
   setPosition = (position: 'bottom' | 'top') => {
     this.close(() => {
-      this.value = position === 'bottom' ? 50 : -84;
+      this.value = position === 'bottom' ? 50 : -50;
       this.animatedValue.setValue(this.value);
       this.setState({ position: position });
     });
@@ -111,7 +111,7 @@ class SnackBar extends Component<Props, State> {
   };
 
   setValue = (position: 'bottom' | 'top') => {
-    this.value = position === 'bottom' ? 50 : -84;
+    this.value = position === 'bottom' ? 50 : -50;
     this.animatedValue.setValue(this.value);
   };
 
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
 
   top: {
-    top: 10,
+    top: 0,
     right: 10,
     left: 10,
     borderRadius: 3

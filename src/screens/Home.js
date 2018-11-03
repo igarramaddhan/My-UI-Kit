@@ -22,6 +22,10 @@ export default class Home extends Component<Props, State> {
           title="snackbar"
           onPress={() => this.props.navigation.navigate('Profile')}
         />
+        <Button
+          title="list"
+          onPress={() => this.props.navigation.navigate('List')}
+        />
       </View>
     );
   }
